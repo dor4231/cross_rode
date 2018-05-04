@@ -1,11 +1,16 @@
+const BOX_SIZE_X = 101;
+const BOX_SIZE_Y = 82;
+
 // Enemies our player must avoid
 class Enemy {
-    constructor() {
+    constructor(startPosition, speed, type = "bug") {
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
         this.sprite = 'images/enemy-bug.png';
+        this.startPosition = startPosition - 30;
+        this.speed = speed;
         this.x = -100;
-        this.y = 50;
+        this.y = this.startPosition;
     }
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -17,13 +22,12 @@ class Enemy {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
-        this.x += 200 * dt;
-        this.y += 20 * dt;
-        if (this.x > 600) {
+        this.x += this.speed * dt;
+        // this.y += 20 * dt;
+        if (this.x > 808) {
             this.x = -100;
-            this.y = 50;
+            this.y = this.startPosition;
         }
-        console.log("good" + this.x);
     };
 
     // Draw the enemy on the screen, required method for game
@@ -37,10 +41,12 @@ class Player {
     constructor(name) {
         this.name = name;
         this.sprite = "images/char-boy.png";
+        this.startPoint = [404, 390];
+        [this.x, this.y] = this.startPoint
     }
 
     update() {
-        console.log(this.name + "Updated!");
+        this.render();
     }
 
     render() {
@@ -48,8 +54,17 @@ class Player {
     }
 
     handleInput(key) {
-        console.log(key);
-        console.log(this);
+        if(key === "up") {
+            this.y -= BOX_SIZE_Y;
+        }else if (key === "down"){
+            this.y += BOX_SIZE_Y;
+        }else if (key === "right"){
+            this.x += BOX_SIZE_X;
+        }else if (key === "left"){
+            this.x -= BOX_SIZE_X;
+        }else {
+
+        }
     };
 }
 // This class requires an update(), render() and
@@ -58,7 +73,13 @@ class Player {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-const allEnemies = [new Enemy(), new Enemy(), new Enemy()];
+const allEnemies = [new Enemy(BOX_SIZE_Y, 330),
+                    new Enemy(BOX_SIZE_Y * 2, 300),
+                    new Enemy(BOX_SIZE_Y * 2, 200),
+                    new Enemy(BOX_SIZE_Y * 2, 400),
+                    new Enemy(BOX_SIZE_Y * 3, 410),
+                    new Enemy(BOX_SIZE_Y * 3, 450),
+                    ];
 // Place the player object in a variable called player
 const player = new Player("Dor");
 
