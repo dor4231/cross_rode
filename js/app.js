@@ -6,7 +6,7 @@ class Enemy {
     constructor(startPosition, speed, type = "bug") {
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
-        this.sprite = 'images/enemy-bug.png';
+        this.sprite = `images/enemy-${type}.png`;
         this.startPosition = startPosition - 30;
         this.speed = speed;
         this.x = -100;
@@ -41,7 +41,7 @@ class Player {
     constructor(name) {
         this.name = name;
         this.sprite = "images/char-boy.png";
-        this.startPoint = [404, 390];
+        this.startPoint = [404, 480];
         [this.x, this.y] = this.startPoint
     }
 
@@ -63,7 +63,7 @@ class Player {
         }else if (key === "left"){
             this.x -= BOX_SIZE_X;
         }else {
-
+            console.log("Invalid key!");
         }
     };
 }
@@ -75,10 +75,10 @@ class Player {
 // Place all enemy objects in an array called allEnemies
 const allEnemies = [new Enemy(BOX_SIZE_Y, 330),
                     new Enemy(BOX_SIZE_Y * 2, 300),
-                    new Enemy(BOX_SIZE_Y * 2, 200),
-                    new Enemy(BOX_SIZE_Y * 2, 400),
+                    new Enemy(BOX_SIZE_Y * 2, 200, 'pink-ghost'),
+                    new Enemy(BOX_SIZE_Y * 2, 400, "ninja-ghost"),
                     new Enemy(BOX_SIZE_Y * 3, 410),
-                    new Enemy(BOX_SIZE_Y * 3, 450),
+                    new Enemy(BOX_SIZE_Y * 3, 450, "pirate-ghost"),
                     ];
 // Place the player object in a variable called player
 const player = new Player("Dor");
