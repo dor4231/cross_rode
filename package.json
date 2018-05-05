@@ -1,0 +1,23 @@
+{
+  "name": "cross_rode",
+  "version": "1.0.0",
+  "description": "Arcade game, frogger like with a fun twist.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dor4231/cross_rode.git"
+  },
+  "author": "Dor Bar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dor4231/cross_rode/issues"
+  },
+  "homepage": "https://github.com/dor4231/cross_rode#readme",
+  "devDependencies": {
+    "grunt": "^1.0.2",
+    "grunt-responsive-images": "^1.10.1"
+  }
+}
