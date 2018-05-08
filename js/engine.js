@@ -86,7 +86,15 @@ var Engine = (function (global) {
         for(const enemy of allEnemies) {
             if(Math.abs(player.x - enemy.x) < 41.5 && Math.abs(player.y - enemy.y) < 41.5 )
                 [player.x, player.y] = player.startPoint;
+            for (const shot of shots) {
+                if(Math.abs(shot.x - enemy.x) < 41.5 && Math.abs(shot.y - enemy.y) < 41.5 ) {
+                    allEnemies.delete(enemy);
+                    shots.delete(shot);
+                }
+
+            }
         }
+
     }
 
     /* This is called by the update function and loops through all of the
@@ -97,9 +105,8 @@ var Engine = (function (global) {
      * render methods.
      */
     function updateEntities(dt) {
-        allEnemies.forEach(function (enemy) {
-            enemy.update(dt);
-        });
+        allEnemies.forEach(enemy => enemy.update(dt));
+        shots.forEach(shot => shot.update(dt));
         player.update();
     }
 
@@ -128,7 +135,7 @@ var Engine = (function (global) {
             row, col;
 
         // Before drawing, clear existing canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that
@@ -162,6 +169,8 @@ var Engine = (function (global) {
             enemy.render();
         });
 
+        shots.forEach(shot => shot.render());
+
         player.render();
     }
 
@@ -185,7 +194,8 @@ var Engine = (function (global) {
         'images/enemy-pink-ghost.png',
         'images/enemy-ninja-ghost.png',
         'images/enemy-pirate-ghost.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/Star.png'
     ]);
     Resources.onReady(init);
 

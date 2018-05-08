@@ -23,7 +23,6 @@ class Enemy {
         // which will ensure the game runs at the same speed for
         // all computers.
         this.x += this.speed * dt;
-        // this.y += 20 * dt;
         if (this.x > 808) {
             this.x = this.startPosition[0];
             this.y = this.startPosition[1];
@@ -46,7 +45,6 @@ class Player {
     }
 
     update() {
-
         this.render();
     }
 
@@ -64,7 +62,7 @@ class Player {
         }else if (key === "left"){
             this.x -= BOX_SIZE_X;
         }else if (key === "space"){
-            new Shot([this.x, this.y])
+            shots.add(new Shot([this.x, this.y]))
         }else {
             console.log("Invalid key!");
         }
@@ -73,14 +71,23 @@ class Player {
 
 class Shot {
     constructor(startPoint) {
-        this.sprite = "images/char-boy.png";
+        this.sprite = "images/Star.png";
         this.startPoint = startPoint;
-        [this.x, this.y] = this.startPoint
+        [this.x, this.y] = this.startPoint;
     }
 
-    update() {
-        this.render();
-    }
+    update(dt) {
+        // You should multiply any movement by the dt parameter
+        // which will ensure the game runs at the same speed for
+        // all computers.
+
+        if (this.y > 808) {
+            // this.y = -10000;
+        }else {
+            this.y -= 700 * dt;
+        }
+
+    };
 
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -95,37 +102,27 @@ function randomNum(min, max) {
 
 
 function createEnemies(num) {
-    const allEnemiesTemp = [];
+    const allEnemiesTemp = new Set();
     for (let i = 0; i < num; i++) {
         const enemyRows = [1,2,3,5];
         const startPoint_x = randomNum(100, 300) * (-1);
         const startPoint_y  = BOX_SIZE_Y * enemyRows[randomNum(0, 4)];
 
-        console.log("Creating enemy");
-        allEnemiesTemp.push(new Enemy([startPoint_x, startPoint_y], randomNum(100, 500)));
+        allEnemiesTemp.add(new Enemy([startPoint_x, startPoint_y], randomNum(100, 500)));
     }
-    console.log(allEnemiesTemp);
     return allEnemiesTemp;
-    // [new Enemy(BOX_SIZE_Y, 330),
-    //     new Enemy(BOX_SIZE_Y * 2, 300),
-    //     new Enemy(BOX_SIZE_Y * 2, 200),
-    //     new Enemy(BOX_SIZE_Y * 2, 400),
-    //     new Enemy(BOX_SIZE_Y * 3, 410),
-    //     new Enemy(BOX_SIZE_Y * 3, 450),
-    //     new Enemy(BOX_SIZE_Y * 5, 350),
-    //     new Enemy(BOX_SIZE_Y * 5, 250),
-    //     new Enemy(BOX_SIZE_Y * 5, 550)
-    // ]
 }
-// This class requires an update(), render() and
-// a handleInput() method.
 
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
+const shots = new Set();
 const allEnemies = createEnemies(50);
 // Place the player object in a variable called player
 const player = new Player("Dor");
+
+
+
 
 
 
