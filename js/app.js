@@ -1,5 +1,5 @@
 const BOX_SIZE_X = 101;
-const BOX_SIZE_Y = 82;
+const BOX_SIZE_Y = 83;
 
 // Enemies our player must avoid
 class Enemy {
@@ -106,7 +106,7 @@ function createEnemies(num) {
     for (let i = 0; i < num; i++) {
         const enemyRows = [1,2,3,5];
         const startPoint_x = randomNum(100, 300) * (-1);
-        const startPoint_y  = BOX_SIZE_Y * enemyRows[randomNum(0, 4)];
+        const startPoint_y  = BOX_SIZE_Y * enemyRows[randomNum(0,4)] -25;
 
         allEnemiesTemp.add(new Enemy([startPoint_x, startPoint_y], randomNum(100, 500)));
     }
@@ -117,13 +117,18 @@ function createEnemies(num) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 const shots = new Set();
-const allEnemies = createEnemies(50);
+const allEnemies = createEnemies(1);
 // Place the player object in a variable called player
 const player = new Player("Dor");
 
 
 
-
+const enemiesRegenerate = setInterval(() => {
+    const enemiesUnit = createEnemies(2);
+    for(const enemy of enemiesUnit)
+        allEnemies.add(enemy)
+    }, 1000
+);
 
 
 // This listens for key presses and sends the keys to your
