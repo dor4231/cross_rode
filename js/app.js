@@ -135,10 +135,13 @@ const player = new Player("Dor", "boy");
 
 
 const enemiesRegenerate = setInterval(() => {
-    const enemiesUnit = createEnemies(2);
-    for(const enemy of enemiesUnit)
-        allEnemies.add(enemy)
-    }, 1000
+    if (allEnemies.size < 50){
+        const enemiesUnit = createEnemies(2);
+        for(const enemy of enemiesUnit)
+            allEnemies.add(enemy)
+    }
+    }
+    , 1000
 );
 
 
