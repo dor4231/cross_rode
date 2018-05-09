@@ -1,6 +1,9 @@
 const BOX_SIZE_X = 101;
 const BOX_SIZE_Y = 83;
 
+const CANVAS_WIDTH = 808;
+const CANVAS_HEIGHT = 640;
+
 // Enemies our player must avoid
 class Enemy {
     constructor(startPosition, speed, type = "bug") {
@@ -52,15 +55,27 @@ class Player {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
+    move(x, y) {
+        this.x += x;
+        this.y += y;
+        if (   this.x >= CANVAS_WIDTH
+            || this.x <= -83
+            || this.y >= CANVAS_HEIGHT
+            || this.y <= -83) {
+            this.x -= x;
+            this.y -= y;
+        }
+    }
+
     handleInput(key) {
         if(key === "up") {
-            this.y -= BOX_SIZE_Y;
+            this.move(0, -BOX_SIZE_Y);
         }else if (key === "down"){
-            this.y += BOX_SIZE_Y;
+            this.move(0, BOX_SIZE_Y);
         }else if (key === "right"){
-            this.x += BOX_SIZE_X;
+            this.move(BOX_SIZE_X, 0);
         }else if (key === "left"){
-            this.x -= BOX_SIZE_X;
+            this.move(-BOX_SIZE_X, 0);
         }else if (key === "space"){
             shots.add(new Shot([this.x, this.y]))
         }else {
@@ -77,12 +92,8 @@ class Shot {
     }
 
     update(dt) {
-        // You should multiply any movement by the dt parameter
-        // which will ensure the game runs at the same speed for
-        // all computers.
-
         if (this.y > 808) {
-            // this.y = -10000;
+
         }else {
             this.y -= 700 * dt;
         }
