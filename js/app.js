@@ -37,9 +37,9 @@ class Enemy {
 
 // Now write your own player class
 class Player {
-    constructor(name) {
+    constructor(name, char) {
         this.name = name;
-        this.sprite = "images/char-boy.png";
+        this.sprite = `images/char-${char}.png`;
         this.startPoint = [404, 560];
         [this.x, this.y] = this.startPoint
     }
@@ -119,7 +119,7 @@ function createEnemies(num) {
 const shots = new Set();
 const allEnemies = createEnemies(1);
 // Place the player object in a variable called player
-const player = new Player("Dor");
+const player = new Player("Dor", "boy");
 
 
 
