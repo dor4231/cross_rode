@@ -114,12 +114,14 @@ function randomNum(min, max) {
 
 function createEnemies(num) {
     const allEnemiesTemp = new Set();
+    const enemyRows = [1,2,3,5];
+    const enemiesTypes = ["ninja-ghost","bug", "bug","pink-ghost","pirate-ghost"];
     for (let i = 0; i < num; i++) {
-        const enemyRows = [1,2,3,5];
         const startPoint_x = randomNum(100, 300) * (-1);
         const startPoint_y  = BOX_SIZE_Y * enemyRows[randomNum(0,4)] -25;
+        const enemyType = enemiesTypes[randomNum(-1,4)];
 
-        allEnemiesTemp.add(new Enemy([startPoint_x, startPoint_y], randomNum(100, 500)));
+        allEnemiesTemp.add(new Enemy([startPoint_x, startPoint_y], randomNum(100, 500), enemyType));
     }
     return allEnemiesTemp;
 }
