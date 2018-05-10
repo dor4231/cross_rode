@@ -1,6 +1,19 @@
-frontend-nanodegree-arcade-game
+Cross-Rodes
 ===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+## Description:
+You are a nice person. Who trapped in the zone of monsters. After several days in hell you find the river, you have to get into that river in order to get back home. The only way to reach the river is by crossing rodes full of monsters.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+Lucky for you you know how to shoot starts to vanish some monsters and thin this heavy traffic of monsters!
+
+## Run the Game:
+* Clone this git repository to your local machine.
+* Click on index.html.
+* HAVE FUN!
+
+## How to play:
+Move Left, Right, Up and Down by using the arrow keys and the space-bar in order to shoot stars.
+
+_Notice you can shoot starts only forward._  
+
+
