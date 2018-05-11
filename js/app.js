@@ -43,7 +43,7 @@ class Player {
     constructor(name, char) {
         this.name = name;
         this.sprite = `images/char-${char}.png`;
-        this.startPoint = [404, 560];
+        this.startPoint = [404, 560 -50];
         [this.x, this.y] = this.startPoint
     }
 
@@ -70,7 +70,7 @@ class Player {
     handleInput(key) {
         if(key === "up") {
             this.move(0, -BOX_SIZE_Y);
-            if(this.y <= 1) console.log("Win!");
+            if(this.y <= 1) winTheGame();
         }else if (key === "down"){
             this.move(0, BOX_SIZE_Y);
         }else if (key === "right"){
@@ -82,7 +82,7 @@ class Player {
         }else {
             console.log("Invalid key!");
         }
-    };
+    }
 }
 
 class Shot {
@@ -119,12 +119,16 @@ function createEnemies(num) {
     const enemiesTypes = ["ninja-ghost","bug","pink-ghost","pirate-ghost"];
     for (let i = 0; i < num; i++) {
         const startPoint_x = randomNum(100, 300) * (-1);
-        const startPoint_y  = BOX_SIZE_Y * enemyRows[randomNum(0,4)] -25;
+        const startPoint_y  = BOX_SIZE_Y * enemyRows[randomNum(0,4)] -75;
         const enemyType = enemiesTypes[randomNum(-1,4)];
 
         allEnemiesTemp.add(new Enemy([startPoint_x, startPoint_y], randomNum(100, 500), enemyType));
     }
     return allEnemiesTemp;
+}
+
+function winTheGame() {
+    console.log("Win!");
 }
 
 
