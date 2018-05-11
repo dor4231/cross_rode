@@ -13,20 +13,20 @@
  * writing app.js a little simpler to work with.
  */
 
-const Engine = (function (global) {
+const Engine = function (global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
     const doc = global.document,
-        win = global.window,
-        canvas = doc.createElement('canvas'),
-        ctx = canvas.getContext('2d');
+          win = global.window,
+          canvas = doc.createElement('canvas'),
+          ctx = canvas.getContext('2d');
     let lastTime;
 
     canvas.width = 808;
     canvas.height = 760;
-    doc.body.appendChild(canvas);
+    doc.querySelector(".canvas-container").appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -204,4 +204,6 @@ const Engine = (function (global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
-})(this);
+};
+
+Engine(this);
