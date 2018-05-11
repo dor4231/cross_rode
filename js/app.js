@@ -70,6 +70,7 @@ class Player {
     handleInput(key) {
         if(key === "up") {
             this.move(0, -BOX_SIZE_Y);
+            if(this.y <= 1) console.log("Win!");
         }else if (key === "down"){
             this.move(0, BOX_SIZE_Y);
         }else if (key === "right"){
@@ -115,7 +116,7 @@ function randomNum(min, max) {
 function createEnemies(num) {
     const allEnemiesTemp = new Set();
     const enemyRows = [1,2,3,5];
-    const enemiesTypes = ["ninja-ghost","bug", "bug","pink-ghost","pirate-ghost"];
+    const enemiesTypes = ["ninja-ghost","bug","pink-ghost","pirate-ghost"];
     for (let i = 0; i < num; i++) {
         const startPoint_x = randomNum(100, 300) * (-1);
         const startPoint_y  = BOX_SIZE_Y * enemyRows[randomNum(0,4)] -25;
