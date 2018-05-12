@@ -1,8 +1,19 @@
+@font-face {
+    src: url('https://fonts.googleapis.com/css?family=Titan+One');
+    font-family: "Titan One";
+}
+
+
 body, html {
     text-align: center;
     background-color: #4E975E;
     margin: 0;
     height: 100%;
+}
+
+p {
+    margin: 0;
+    padding: 0;
 }
 
 header {
@@ -24,6 +35,8 @@ main {
     margin: 0 auto;
 }
 
+
+
 .game-container {
     max-width: 700px;
     width: 90%;
@@ -34,6 +47,40 @@ main {
     overflow: hidden;
     background-color: #4E975E;
 }
+
+.game-container .player-info {
+    display: flex;
+    background-color: #372727;
+    height: 50px;
+}
+
+.game-container .player-info * {
+    /*border: 1px solid white;*/
+    flex-basis: 25%;
+}
+
+.health ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.health li {
+    flex-basis: 33.3%;
+}
+
+.health li img {
+    width: 60%;
+    margin-top: -25%;
+}
+
+.player-info .number {
+    font-family: 'Titan One', cursive;
+    color: white;
+    font-size: 3vw;
+}
+
 
 canvas {
     width: 100%;
