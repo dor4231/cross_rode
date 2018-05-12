@@ -2,7 +2,7 @@ const BOX_SIZE_X = 101;
 const BOX_SIZE_Y = 83;
 
 const CANVAS_WIDTH = 808;
-const CANVAS_HEIGHT = 640;
+const CANVAS_HEIGHT = 560;
 
 // Enemies our player must avoid
 class Enemy {
@@ -15,6 +15,7 @@ class Enemy {
         this.x = this.startPosition[0];
         this.y = this.startPosition[1];
     }
+
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -42,8 +43,9 @@ class Enemy {
 class Player {
     constructor(name, char) {
         this.name = name;
+        this.health = 3;
         this.sprite = `images/char-${char}.png`;
-        this.startPoint = [404, 560 -50];
+        this.startPoint = [404, 560 - 50];
         [this.x, this.y] = this.startPoint
     }
 
@@ -58,7 +60,7 @@ class Player {
     move(x, y) {
         this.x += x;
         this.y += y;
-        if (   this.x >= CANVAS_WIDTH
+        if (this.x >= CANVAS_WIDTH
             || this.x <= -83
             || this.y >= CANVAS_HEIGHT
             || this.y <= -83) {
@@ -68,18 +70,18 @@ class Player {
     }
 
     handleInput(key) {
-        if(key === "up") {
+        if (key === "up") {
             this.move(0, -BOX_SIZE_Y);
-            if(this.y <= 1) winTheGame();
-        }else if (key === "down"){
+            if (this.y <= 1) winTheGame();
+        } else if (key === "down") {
             this.move(0, BOX_SIZE_Y);
-        }else if (key === "right"){
+        } else if (key === "right") {
             this.move(BOX_SIZE_X, 0);
-        }else if (key === "left"){
+        } else if (key === "left") {
             this.move(-BOX_SIZE_X, 0);
-        }else if (key === "space"){
+        } else if (key === "space") {
             shots.add(new Shot([this.x, this.y]))
-        }else {
+        } else {
             console.log("Invalid key!");
         }
     }
@@ -95,7 +97,7 @@ class Shot {
     update(dt) {
         if (this.y > 808) {
 
-        }else {
+        } else {
             this.y -= 700 * dt;
         }
 
@@ -115,12 +117,12 @@ function randomNum(min, max) {
 
 function createEnemies(num) {
     const allEnemiesTemp = new Set();
-    const enemyRows = [1,2,3,5];
-    const enemiesTypes = ["ninja-ghost","bug","pink-ghost","pirate-ghost"];
+    const enemyRows = [1, 2, 3, 5];
+    const enemiesTypes = ["ninja-ghost", "bug", "pink-ghost", "pirate-ghost"];
     for (let i = 0; i < num; i++) {
         const startPoint_x = randomNum(100, 300) * (-1);
-        const startPoint_y  = BOX_SIZE_Y * enemyRows[randomNum(0,4)] -75;
-        const enemyType = enemiesTypes[randomNum(-1,4)];
+        const startPoint_y = BOX_SIZE_Y * enemyRows[randomNum(0, 4)] - 75;
+        const enemyType = enemiesTypes[randomNum(-1, 4)];
 
         allEnemiesTemp.add(new Enemy([startPoint_x, startPoint_y], randomNum(100, 500), enemyType));
     }
@@ -140,13 +142,12 @@ const allEnemies = createEnemies(1);
 const player = new Player("Dor", "boy");
 
 
-
 const enemiesRegenerate = setInterval(() => {
-    if (allEnemies.size < 50){
-        const enemiesUnit = createEnemies(2);
-        for(const enemy of enemiesUnit)
-            allEnemies.add(enemy)
-    }
+        if (allEnemies.size < 50) {
+            const enemiesUnit = createEnemies(2);
+            for (const enemy of enemiesUnit)
+                allEnemies.add(enemy)
+        }
     }
     , 1000
 );
@@ -154,7 +155,7 @@ const enemiesRegenerate = setInterval(() => {
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     const allowedKeys = {
         32: "space",
         37: 'left',
