@@ -85,8 +85,13 @@ const Engine = function (global) {
 
     function checkCollisions() {
         for(const enemy of allEnemies) {
-            if(Math.abs(player.x - enemy.x) < 41.5 && Math.abs(player.y - enemy.y) < 41.5 )
+            if(Math.abs(player.x - enemy.x) < 41.5 && Math.abs(player.y - enemy.y) < 41.5 ) {
                 [player.x, player.y] = player.startPoint;
+                player.health -= 1;
+                if (player.health >= 0) {
+                    reset();
+                }
+            }
             for (const shot of shots) {
                 if(Math.abs(shot.x - enemy.x) < 41.5 && Math.abs(shot.y - enemy.y) < 41.5 ) {
                     allEnemies.delete(enemy);
@@ -179,8 +184,19 @@ const Engine = function (global) {
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
-    function reset() {
-        // noop
+    function reset(status) {
+        const popup = document.querySelector(".pop-up.reset-game");
+        popup.classList.remove("hidden");
+        const headline = popup.querySelector("h2");
+        if(status === "win") {
+            headline.innerText = "You Win!";
+            headline.style.color = "#284";
+        }else if (status === "lose"){
+            headline.innerText = "Game Over";
+            headline.style.color = "#821";
+        }else {
+
+        }
     }
 
     /* Go ahead and load all of the images we know we're going to need to
