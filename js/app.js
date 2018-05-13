@@ -4,6 +4,7 @@ const BOX_SIZE_Y = 83;
 const CANVAS_WIDTH = 808;
 const CANVAS_HEIGHT = 560;
 
+
 // Enemies class
 class Enemy {
     constructor(startPosition, speed, type = "bug") {
@@ -125,7 +126,8 @@ function createEnemies(num) {
 const shots = new Set();
 const allEnemies = createEnemies(1);
 // Place the player object in a variable called player
-const player = new Player("Dor", "boy");
+let player = new Player("Dor", "cat-girl");
+
 
 
 const enemiesRegenerate = setInterval(() => {
@@ -151,4 +153,14 @@ document.addEventListener('keyup', function (e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
+});
+
+
+document.querySelector("#start-game").addEventListener("click", function(e) {
+    e.preventDefault();
+    const popup = document.querySelector(".pop-up-background.reset-game");
+    const startForm = popup.querySelector(".start-form");
+    const playerName = startForm.querySelector("#player-name");
+    popup.classList.add("hide");
+    player = new Player(playerName, "boy");
 });
