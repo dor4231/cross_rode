@@ -1,7 +1,4 @@
-@font-face {
-    src: url('https://fonts.googleapis.com/css?family=Titan+One');
-    font-family: "Titan One";
-}
+@import url('https://fonts.googleapis.com/css?family=Skranji');
 
 
 body, html {
@@ -94,7 +91,7 @@ main {
 }
 
 .player-info .number {
-    font-family: 'Titan One', cursive;
+    font-family: 'Skranji', cursive;
     color: white;
     font-size: 3vw;
 }
@@ -109,8 +106,17 @@ canvas {
     Dynamic Classes
 */
 
-.pop-up {
+.pop-up-background {
     position: fixed;
+    height: 100%;
+    width: 100%;
+    top:0;
+    left: 0;
+    background: rgba(0,0,0,0.3);
+}
+
+.pop-up {
+    margin: 15% auto;
     display: flex;
     flex-wrap: wrap;
     background: #4090dd;
@@ -175,6 +181,21 @@ canvas {
     box-shadow: 1px 1px 0 rgba(55, 39, 39, 0.7);
 }
 
-.hides {
+.control-guid {
+    font-size: 0.8em;
+}
+
+.control-guid span {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.hide {
     visibility: hidden;
+}
+
+@media screen and (min-width: 1266px) {
+    .pop-up {
+        font-size: 25.3px;
+    }
 }
