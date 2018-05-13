@@ -219,6 +219,10 @@ const Engine = function (global) {
         'images/enemy-ninja-ghost.png',
         'images/enemy-pirate-ghost.png',
         'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
         'images/Star.png'
     ]);
     Resources.onReady(init);
