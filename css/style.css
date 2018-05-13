@@ -162,6 +162,10 @@ canvas {
     text-shadow: 0 0 10px #e4e4e4;
 }
 
+.pop-up .character {
+    font-size: 0.7em;
+}
+
 .pop-up input[type=text] {
     padding: 10px 15px;
     border: none;
