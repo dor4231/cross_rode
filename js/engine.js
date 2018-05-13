@@ -84,12 +84,16 @@ const Engine = function (global) {
     }
 
     function checkCollisions() {
+        const health = document.querySelector(".health");
+
         for(const enemy of allEnemies) {
             if(Math.abs(player.x - enemy.x) < 41.5 && Math.abs(player.y - enemy.y) < 41.5 ) {
                 [player.x, player.y] = player.startPoint;
                 player.health -= 1;
-                if (player.health >= 0) {
-                    reset();
+                console.log(player.health);
+                health.lastChild.innerHTML = "";
+                if (player.health < 0) {
+                    reset("lose");
                 }
             }
             for (const shot of shots) {
@@ -113,7 +117,6 @@ const Engine = function (global) {
     function updateEntities(dt) {
         allEnemies.forEach(enemy => enemy.update(dt));
         shots.forEach(shot => shot.update(dt));
-        player.update();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -178,6 +181,7 @@ const Engine = function (global) {
         shots.forEach(shot => shot.render());
 
         player.render();
+        if (player.y <= 1) reset("win");
     }
 
     /* This function does nothing but it could have been a good place to
@@ -185,9 +189,12 @@ const Engine = function (global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset(status) {
-        const popup = document.querySelector(".pop-up.reset-game");
-        popup.classList.remove("hidden");
+        const popup = document.querySelector(".pop-up-background.reset-game");
         const headline = popup.querySelector("h2");
+
+        console.log("restart!");
+
+        popup.classList.remove("hide");
         if(status === "win") {
             headline.innerText = "You Win!";
             headline.style.color = "#284";
