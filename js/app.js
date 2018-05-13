@@ -4,7 +4,7 @@ const BOX_SIZE_Y = 83;
 const CANVAS_WIDTH = 808;
 const CANVAS_HEIGHT = 560;
 
-// Enemies our player must avoid
+// Enemies class
 class Enemy {
     constructor(startPosition, speed, type = "bug") {
         // The image/sprite for our enemies, this uses
@@ -16,30 +16,25 @@ class Enemy {
         this.y = this.startPosition[1];
     }
 
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-
-    // Update the enemy's position, required method for game
+    // Update the enemy's position
     // Parameter: dt, a time delta between ticks
     update(dt) {
-        // You should multiply any movement by the dt parameter
-        // which will ensure the game runs at the same speed for
-        // all computers.
+        // Movement is multiplied by the dt parameter which will
+        // ensure the game runs at the same speed for all computers.
         this.x += this.speed * dt;
         if (this.x > 808) {
             this.x = this.startPosition[0];
             this.y = this.startPosition[1];
         }
-    };
+    }
 
-    // Draw the enemy on the screen, required method for game
+    // Draw the enemy on the screen
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    };
+    }
 }
 
-// Now write your own player class
+// The Player class
 class Player {
     constructor(name, char) {
         this.name = name;
@@ -47,10 +42,6 @@ class Player {
         this.sprite = `images/char-${char}.png`;
         this.startPoint = [404, 560 - 50];
         [this.x, this.y] = this.startPoint
-    }
-
-    update() {
-        this.render();
     }
 
     render() {
@@ -72,7 +63,6 @@ class Player {
     handleInput(key) {
         if (key === "up") {
             this.move(0, -BOX_SIZE_Y);
-            if (this.y <= 1) winTheGame();
         } else if (key === "down") {
             this.move(0, BOX_SIZE_Y);
         } else if (key === "right") {
@@ -127,10 +117,6 @@ function createEnemies(num) {
         allEnemiesTemp.add(new Enemy([startPoint_x, startPoint_y], randomNum(100, 500), enemyType));
     }
     return allEnemiesTemp;
-}
-
-function winTheGame() {
-    console.log("Win!");
 }
 
 
