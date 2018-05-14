@@ -95,6 +95,7 @@ const Engine = function (global) {
                 if (player.health < 0) {
                     reset("lose");
                 }
+                updateHealth();
             }
             for (const shot of SHOTS) {
                 if(Math.abs(shot.x - enemy.x) < 41.5 && Math.abs(shot.y - enemy.y) < 41.5 ) {

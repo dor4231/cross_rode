@@ -41,7 +41,8 @@ class Enemy {
 class Player {
     constructor(name, char, shots) {
         this.name = name;
-        this.health = 3;
+        this.health = 2;
+        this.score = 0;
         this.shots = shots;
         this.sprite = `images/char-${char}.png`;
         this.startPoint = [404, 560 - 50];
@@ -68,6 +69,7 @@ class Player {
         if(this.shots > 0){
             SHOTS.add(new Shot([this.x, this.y]));
             this.shots -= 1;
+            updateShots();
         }else {
             console.log("No more stars available");
         }
@@ -111,6 +113,9 @@ class Shot {
     }
 }
 
+
+
+
 // Generate random numbers between min and max
 function randomNum(min, max) {
     min = Math.ceil(min);
@@ -143,6 +148,27 @@ function getRadioID(radio_form) {
         if (radio.checked) return radio.id;
     }
 }
+
+//
+// Update player information functions:
+////////////////////////////////////////
+function updateHealth() {
+    const health =  document.querySelectorAll(".player-info .health li");
+    for(const heart in health) {
+        if(player.health < heart){
+            health[heart].innerHTML = "";
+        }else {
+            health[heart].innerHTML = `<img src="images/Heart.png" alt="Heart">`;
+        }
+    }
+}
+
+function updateShots() {
+    const shotsLeft =  document.querySelector(".player-info .shots p");
+    shotsLeft.innerText = player.shots;
+}
+
+
 
 // Interval creates enemies every second up to the MAX_MONSTERS_AMOUNT
 const enemiesRegenerate = setInterval(() => {
@@ -197,4 +223,5 @@ document.querySelector("#start-game").addEventListener("click", function(e) {
         playerShots = 100;
     }
     player = new Player(playerName, playerChar, playerShots);
+    updateShots();
 });
