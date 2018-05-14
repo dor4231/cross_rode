@@ -128,7 +128,11 @@ const allEnemies = createEnemies(1);
 // Place the player object in a variable called player
 let player = new Player("Dor", "cat-girl");
 
-
+function getRadioID(radio_form) {
+    for (const radio of radio_form) {
+        if (radio.checked) return radio.id;
+    }
+}
 
 const enemiesRegenerate = setInterval(() => {
         if (allEnemies.size < 50) {
@@ -161,6 +165,7 @@ document.querySelector("#start-game").addEventListener("click", function(e) {
     const popup = document.querySelector(".pop-up-background.reset-game");
     const startForm = popup.querySelector(".start-form");
     const playerName = startForm.querySelector("#player-name");
+    const playerType = getRadioID(document.querySelectorAll(".radio.character input"));
     popup.classList.add("hide");
-    player = new Player(playerName, "boy");
+    player = new Player(playerName, playerType);
 });
