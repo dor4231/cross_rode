@@ -1,3 +1,4 @@
+// Globals used for easy to change configuration.
 const BOX_SIZE_X = 101;
 const BOX_SIZE_Y = 83;
 
@@ -11,8 +12,6 @@ const SHOTS = new Set();
 // Enemies class
 class Enemy {
     constructor(startPosition, speed, type = "bug") {
-        // The image/sprite for our enemies, this uses
-        // a helper we've provided to easily load images
         this.sprite = `images/enemy-${type}.png`;
         this.startPosition = [startPosition[0] - 30, startPosition[1]];
         this.speed = speed;
@@ -112,13 +111,14 @@ class Shot {
     }
 }
 
+// Generate random numbers between min and max
 function randomNum(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-
+// Generate enemies with random speed, sprite and rode
 function createEnemies(num) {
     const allEnemiesTemp = new Set();
     const enemyRows = [1, 2, 3, 5];
@@ -134,11 +134,9 @@ function createEnemies(num) {
 }
 
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-const allEnemies = createEnemies(1);
-// Place the player object in a variable called player
+const allEnemies = createEnemies(8);
 let player = new Player("Dor", "cat-girl");
+
 
 function getRadioID(radio_form) {
     for (const radio of radio_form) {
@@ -146,6 +144,7 @@ function getRadioID(radio_form) {
     }
 }
 
+// Interval creates enemies every second up to the MAX_MONSTERS_AMOUNT
 const enemiesRegenerate = setInterval(() => {
         if (allEnemies.size < MAX_MONSTERS_AMOUNT) {
             const enemiesUnit = createEnemies(2);
@@ -172,12 +171,14 @@ document.addEventListener('keyup', function (e) {
 });
 
 
+// Staring the game by clicking on "Start Game" button.
+// Setting Player Name, Character and Difficulty.
 document.querySelector("#start-game").addEventListener("click", function(e) {
     e.preventDefault();
     const popup = document.querySelector(".pop-up-background.reset-game");
     const startForm = popup.querySelector(".start-form");
     const playerName = startForm.querySelector("#player-name");
-    const playerType = getRadioID(document.querySelectorAll(".radio.character input"));
+    const playerChar = getRadioID(document.querySelectorAll(".radio.character input"));
     const difficulty = getRadioID(document.querySelectorAll(".radio.difficulty input"));
     let playerShots;
     popup.classList.add("hide");
@@ -195,5 +196,5 @@ document.querySelector("#start-game").addEventListener("click", function(e) {
         MAX_MONSTERS_AMOUNT = 60;
         playerShots = 100;
     }
-    player = new Player(playerName, playerType, playerShots);
+    player = new Player(playerName, playerChar, playerShots);
 });
