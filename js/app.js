@@ -4,6 +4,9 @@ const BOX_SIZE_Y = 83;
 const CANVAS_WIDTH = 808;
 const CANVAS_HEIGHT = 560;
 
+let MAX_MONSTERS_AMOUNT = 60;
+const SHOTS = new Set();
+
 
 // Enemies class
 class Enemy {
@@ -37,9 +40,10 @@ class Enemy {
 
 // The Player class
 class Player {
-    constructor(name, char) {
+    constructor(name, char, shots) {
         this.name = name;
         this.health = 3;
+        this.shots = shots;
         this.sprite = `images/char-${char}.png`;
         this.startPoint = [404, 560 - 50];
         [this.x, this.y] = this.startPoint
@@ -61,6 +65,15 @@ class Player {
         }
     }
 
+    shootAStar() {
+        if(this.shots > 0){
+            SHOTS.add(new Shot([this.x, this.y]));
+            this.shots -= 1;
+        }else {
+            console.log("No more stars available");
+        }
+    }
+
     handleInput(key) {
         if (key === "up") {
             this.move(0, -BOX_SIZE_Y);
@@ -71,7 +84,7 @@ class Player {
         } else if (key === "left") {
             this.move(-BOX_SIZE_X, 0);
         } else if (key === "space") {
-            shots.add(new Shot([this.x, this.y]))
+            this.shootAStar();
         } else {
             console.log("Invalid key!");
         }
@@ -123,7 +136,6 @@ function createEnemies(num) {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-const shots = new Set();
 const allEnemies = createEnemies(1);
 // Place the player object in a variable called player
 let player = new Player("Dor", "cat-girl");
@@ -135,7 +147,7 @@ function getRadioID(radio_form) {
 }
 
 const enemiesRegenerate = setInterval(() => {
-        if (allEnemies.size < 50) {
+        if (allEnemies.size < MAX_MONSTERS_AMOUNT) {
             const enemiesUnit = createEnemies(2);
             for (const enemy of enemiesUnit)
                 allEnemies.add(enemy)
@@ -166,6 +178,22 @@ document.querySelector("#start-game").addEventListener("click", function(e) {
     const startForm = popup.querySelector(".start-form");
     const playerName = startForm.querySelector("#player-name");
     const playerType = getRadioID(document.querySelectorAll(".radio.character input"));
+    const difficulty = getRadioID(document.querySelectorAll(".radio.difficulty input"));
+    let playerShots;
     popup.classList.add("hide");
-    player = new Player(playerName, playerType);
+
+    if (difficulty === "low") {
+        MAX_MONSTERS_AMOUNT = 30;
+        playerShots = 50;
+    }else if (difficulty === "medium") {
+        MAX_MONSTERS_AMOUNT = 40;
+        playerShots = 30;
+    }else if (difficulty === "high") {
+        MAX_MONSTERS_AMOUNT = 50;
+        playerShots = 20;
+    }else {
+        MAX_MONSTERS_AMOUNT = 60;
+        playerShots = 100;
+    }
+    player = new Player(playerName, playerType, playerShots);
 });

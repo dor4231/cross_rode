@@ -96,10 +96,10 @@ const Engine = function (global) {
                     reset("lose");
                 }
             }
-            for (const shot of shots) {
+            for (const shot of SHOTS) {
                 if(Math.abs(shot.x - enemy.x) < 41.5 && Math.abs(shot.y - enemy.y) < 41.5 ) {
                     allEnemies.delete(enemy);
-                    shots.delete(shot);
+                    SHOTS.delete(shot);
                 }
 
             }
@@ -116,7 +116,7 @@ const Engine = function (global) {
      */
     function updateEntities(dt) {
         allEnemies.forEach(enemy => enemy.update(dt));
-        shots.forEach(shot => shot.update(dt));
+        SHOTS.forEach(shot => shot.update(dt));
     }
 
     /* This function initially draws the "game level", it will then call
@@ -178,7 +178,7 @@ const Engine = function (global) {
             enemy.render();
         });
 
-        shots.forEach(shot => shot.render());
+        SHOTS.forEach(shot => shot.render());
 
         player.render();
         if (player.y <= 1) reset("win");
