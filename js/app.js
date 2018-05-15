@@ -53,6 +53,8 @@ class Player {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
+
+    // Keeps the player in the game board
     move(x, y) {
         this.x += x;
         this.y += y;

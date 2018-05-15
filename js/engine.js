@@ -106,7 +106,7 @@ const Engine = function (global) {
         }
 
         for(const gem of gems) {
-            if(Math.abs(player.x - gem.x) < 41.5 && Math.abs(player.y - gem.y) < 150 ) {
+            if(Math.abs(player.x - gem.x) < 83 && Math.abs(player.y - gem.y) < 83 ) {
                 gem.giveReword();
                 gems.delete(gem);
             }
@@ -187,7 +187,7 @@ const Engine = function (global) {
 
 
         player.render();
-        if (player.y < -100) reset("win");
+        if (player.y < -100 && player.gems === 3) reset("win");
     }
 
     /* This function does nothing but it could have been a good place to
