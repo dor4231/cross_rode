@@ -179,6 +179,8 @@ canvas {
     border-radius: 10px;
     background: rgb(110, 227, 126);
     box-shadow: 4px 4px 0 rgba(55, 39, 39, 0.7);
+    color: white;
+    font-size: 1vw;
 }
 
 .pop-up button:active {
