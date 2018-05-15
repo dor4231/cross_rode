@@ -42,7 +42,7 @@ class Player {
     constructor(name, char, shots) {
         this.name = name;
         this.health = 2;
-        this.score = 0;
+        this.gems = 0;
         this.shots = shots;
         this.sprite = `images/char-${char}.png`;
         this.startPoint = [404, 560 - 50];
@@ -66,11 +66,11 @@ class Player {
     }
 
     shootAStar() {
-        if(this.shots > 0){
+        if (this.shots > 0) {
             SHOTS.add(new Shot([this.x, this.y]));
             this.shots -= 1;
             updateShots();
-        }else {
+        } else {
             console.log("No more stars available");
         }
     }
@@ -113,22 +113,62 @@ class Shot {
     }
 }
 
+class Collectible {
+    constructor(type, point) {
+        this.type = type;
+        this.sprite = `images/${type}.png`;
+        this.x = point[0];
+        this.y = point[1];
+    }
+
+    giveReword(type) {
+        switch(type) {
+            case "Gem Orange":
+                player.gems += 1;
+                break;
+            case "Heart":
+                player.health += 1;
+                break;
+            case "Star":
+                player.shots += 5;
+                break;
+            default:
+                console.log(`${this.type} not mapped.`)
+        }
+    }
+
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
 
 
+function createGems(amount) {
+    const gems = new Set();
+    const gemString = "Gem Ornage";
+    for (let i = 0; i < amount; i++) {
+        const startPoint_x = randomNum(0, CANVAS_WIDTH - 100);
+        const startPoint_y = randomNum(100, CANVAS_HEIGHT - 100);
 
-// Generate random numbers between min and max
+        gems.add(new Collectible(gemString, [startPoint_x, startPoint_y]));
+    }
+    return gems;
+}
+
+
+// Returns random numbers between min and max
 function randomNum(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-// Generate enemies with random speed, sprite and rode
-function createEnemies(num) {
+// Generate enemies with random speed, sprite and rode line
+function createEnemies(amount) {
     const allEnemiesTemp = new Set();
     const enemyRows = [1, 2, 3, 5];
     const enemiesTypes = ["ninja-ghost", "bug", "pink-ghost", "pirate-ghost"];
-    for (let i = 0; i < num; i++) {
+    for (let i = 0; i < amount; i++) {
         const startPoint_x = randomNum(100, 300) * (-1);
         const startPoint_y = BOX_SIZE_Y * enemyRows[randomNum(0, 4)] - 75;
         const enemyType = enemiesTypes[randomNum(-1, 4)];
@@ -153,21 +193,20 @@ function getRadioID(radio_form) {
 // Update player information functions:
 ////////////////////////////////////////
 function updateHealth() {
-    const health =  document.querySelectorAll(".player-info .health li");
-    for(const heart in health) {
-        if(player.health < heart){
+    const health = document.querySelectorAll(".player-info .health li");
+    for (const heart in health) {
+        if (player.health < heart) {
             health[heart].innerHTML = "";
-        }else {
+        } else {
             health[heart].innerHTML = `<img src="images/Heart.png" alt="Heart">`;
         }
     }
 }
 
 function updateShots() {
-    const shotsLeft =  document.querySelector(".player-info .shots p");
+    const shotsLeft = document.querySelector(".player-info .shots p");
     shotsLeft.innerText = player.shots;
 }
-
 
 
 // Interval creates enemies every second up to the MAX_MONSTERS_AMOUNT
@@ -199,7 +238,7 @@ document.addEventListener('keyup', function (e) {
 
 // Staring the game by clicking on "Start Game" button.
 // Setting Player Name, Character and Difficulty.
-document.querySelector("#start-game").addEventListener("click", function(e) {
+document.querySelector("#start-game").addEventListener("click", function (e) {
     e.preventDefault();
     const popup = document.querySelector(".pop-up-background.reset-game");
     const startForm = popup.querySelector(".start-form");
@@ -212,13 +251,13 @@ document.querySelector("#start-game").addEventListener("click", function(e) {
     if (difficulty === "low") {
         MAX_MONSTERS_AMOUNT = 30;
         playerShots = 50;
-    }else if (difficulty === "medium") {
+    } else if (difficulty === "medium") {
         MAX_MONSTERS_AMOUNT = 40;
         playerShots = 30;
-    }else if (difficulty === "high") {
+    } else if (difficulty === "high") {
         MAX_MONSTERS_AMOUNT = 50;
         playerShots = 20;
-    }else {
+    } else {
         MAX_MONSTERS_AMOUNT = 60;
         playerShots = 100;
     }
