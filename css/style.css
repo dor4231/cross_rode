@@ -192,6 +192,7 @@ canvas {
 .control-guid span {
     font-weight: bold;
     text-decoration: underline;
+    text-transform: uppercase;
 }
 
 .hide {
