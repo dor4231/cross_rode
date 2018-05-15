@@ -59,7 +59,7 @@ class Player {
         if (this.x >= CANVAS_WIDTH
             || this.x <= -83
             || this.y >= CANVAS_HEIGHT
-            || this.y <= -83) {
+            || this.y <= -200) {
             this.x -= x;
             this.y -= y;
         }
@@ -87,7 +87,7 @@ class Player {
         } else if (key === "space") {
             this.shootAStar();
         } else {
-            console.log("Invalid key!");
+            console.log("Key's not in use");
         }
     }
 }
@@ -121,8 +121,8 @@ class Collectible {
         this.y = point[1];
     }
 
-    giveReword(type) {
-        switch(type) {
+    giveReword() {
+        switch(this.type) {
             case "Gem Orange":
                 player.gems += 1;
                 break;
@@ -142,10 +142,16 @@ class Collectible {
     }
 }
 
+// Returns random numbers between min and max
+function randomNum(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
 function createGems(amount) {
     const gems = new Set();
-    const gemString = "Gem Ornage";
+    const gemString = "Gem Orange";
     for (let i = 0; i < amount; i++) {
         const startPoint_x = randomNum(0, CANVAS_WIDTH - 100);
         const startPoint_y = randomNum(100, CANVAS_HEIGHT - 100);
@@ -155,12 +161,8 @@ function createGems(amount) {
     return gems;
 }
 
-
-// Returns random numbers between min and max
-function randomNum(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
+function createPowerUps(amount) {
+    console.log("POWERUP!")
 }
 
 // Generate enemies with random speed, sprite and rode line
@@ -178,9 +180,15 @@ function createEnemies(amount) {
     return allEnemiesTemp;
 }
 
+// Create Game objects Enemies, Collectibles and Player.
+//////////////////////////////////////////
+const allEnemies = createEnemies(5);
+const powerUps = [];
 
-const allEnemies = createEnemies(8);
+
+let gems = createGems(1);
 let player = new Player("Dor", "cat-girl");
+
 
 
 function getRadioID(radio_form) {
@@ -219,6 +227,8 @@ const enemiesRegenerate = setInterval(() => {
     }
     , 1000
 );
+
+const powerUpsGeneration = setInterval(createPowerUps(1), 5000);
 
 
 // This listens for key presses and sends the keys to your
@@ -261,6 +271,8 @@ document.querySelector("#start-game").addEventListener("click", function (e) {
         MAX_MONSTERS_AMOUNT = 60;
         playerShots = 100;
     }
+
+    gems = createGems(3);
     player = new Player(playerName, playerChar, playerShots);
     updateShots();
 });
