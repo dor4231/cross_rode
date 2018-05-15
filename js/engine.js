@@ -106,7 +106,7 @@ const Engine = function (global) {
         }
 
         for(const gem of gems) {
-            if(Math.abs(player.x - gem.x) < 83 && Math.abs(player.y - gem.y) < 83 ) {
+            if(Math.abs(player.x - gem.x) < 83 && Math.abs(player.y - gem.y) < 83) {
                 gem.giveReword();
                 gems.delete(gem);
             }
@@ -124,6 +124,7 @@ const Engine = function (global) {
     function updateEntities(dt) {
         allEnemies.forEach(enemy => enemy.update(dt));
         SHOTS.forEach(shot => shot.update(dt));
+        if(player.time === 0) reset("timeout");
     }
 
     /* This function initially draws the "game level", it will then call
@@ -207,6 +208,9 @@ const Engine = function (global) {
         }else if (status === "lose"){
             headline.innerText = "Game Over";
             headline.style.color = "#821";
+        }else if (status === "timeout"){
+            headline.innerHTML = "Timeout! <br>Try again...";
+            headline.style.color = "#B84";
         }else {
 
         }

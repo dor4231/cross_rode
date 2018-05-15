@@ -39,11 +39,12 @@ class Enemy {
 
 // The Player class
 class Player {
-    constructor(name, char, shots) {
+    constructor(name, char, shots, time) {
         this.name = name;
         this.health = 2;
         this.gems = 0;
         this.shots = shots;
+        this.time = time;
         this.sprite = `images/char-${char}.png`;
         this.startPoint = [404, 560 - 50];
         [this.x, this.y] = this.startPoint
@@ -189,7 +190,7 @@ const powerUps = [];
 
 
 let gems = createGems(1);
-let player = new Player("Dor", "cat-girl");
+let player = new Player("Dor", "cat-girl", 0 , -1);
 
 
 
@@ -218,6 +219,15 @@ function updateShots() {
     shotsLeft.innerText = player.shots;
 }
 
+function updateTime() {
+    const timer = document.querySelector(".player-info .timer");
+    if (player.time > 0) {
+        timer.innerText = player.time;
+    }else if (player.time < 0) {
+        timer.innerText = 0;
+    }
+}
+
 
 // Interval creates enemies every second up to the MAX_MONSTERS_AMOUNT
 const enemiesRegenerate = setInterval(() => {
@@ -226,6 +236,8 @@ const enemiesRegenerate = setInterval(() => {
             for (const enemy of enemiesUnit)
                 allEnemies.add(enemy)
         }
+        player.time -= 1;
+        updateTime();
     }
     , 1000
 );
@@ -258,23 +270,27 @@ document.querySelector("#start-game").addEventListener("click", function (e) {
     const playerChar = getRadioID(document.querySelectorAll(".radio.character input"));
     const difficulty = getRadioID(document.querySelectorAll(".radio.difficulty input"));
     let playerShots;
+    let playerTime;
     popup.classList.add("hide");
 
     if (difficulty === "low") {
-        MAX_MONSTERS_AMOUNT = 30;
-        playerShots = 50;
+        MAX_MONSTERS_AMOUNT = 20;
+        playerShots = 60;
+        playerTime = 100;
     } else if (difficulty === "medium") {
-        MAX_MONSTERS_AMOUNT = 40;
-        playerShots = 30;
+        MAX_MONSTERS_AMOUNT = 30;
+        playerShots = 40;
+        playerTime = 60;
     } else if (difficulty === "high") {
         MAX_MONSTERS_AMOUNT = 50;
-        playerShots = 20;
+        playerShots = 30;
+        playerTime = 30;
     } else {
         MAX_MONSTERS_AMOUNT = 60;
         playerShots = 100;
     }
 
     gems = createGems(3);
-    player = new Player(playerName, playerChar, playerShots);
+    player = new Player(playerName, playerChar, playerShots, playerTime);
     updateShots();
 });
