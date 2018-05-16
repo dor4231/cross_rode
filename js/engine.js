@@ -185,6 +185,7 @@ const Engine = function (global) {
         allEnemies.forEach(enemy => enemy.render());
         SHOTS.forEach(shot => shot.render());
         gems.forEach(gem => gem.render());
+        // powerUps.forEach(powerUp => powerUp.render());
 
 
         player.render();
@@ -199,7 +200,7 @@ const Engine = function (global) {
         const popup = document.querySelector(".pop-up-background.reset-game");
         const headline = popup.querySelector("h2");
 
-        console.log("restart!");
+        clearInterval(powerUpsGeneration);
 
         popup.classList.remove("hide");
         if(status === "win") {

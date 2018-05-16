@@ -130,14 +130,17 @@ class Collectible {
                 player.gems += 1;
                 break;
             case "Heart":
-                player.health += 1;
+                if (player.health < 3) player.health += 1;
+                updateHealth();
                 break;
             case "Star":
-                player.shots += 5;
+                player.shots += 10;
+                updateShots();
                 break;
             default:
                 console.log(`${this.type} not mapped.`)
         }
+
     }
 
     render() {
@@ -164,8 +167,13 @@ function createGems(amount) {
     return gems;
 }
 
-function createPowerUps(amount) {
-    console.log("POWERUP!")
+function createPowerUp(amount) {
+    const powerUps = new Set();
+    const types = ["Heart", "Star", "Heart", "Star", "Star"];
+    const startPoint_x = randomNum(0, CANVAS_WIDTH - 100);
+    const startPoint_y = randomNum(100, CANVAS_HEIGHT - 100);
+
+    return new Collectible(types[randomNum(0, 5)], [startPoint_x, startPoint_y]);
 }
 
 // Generate enemies with random speed, sprite and rode line
@@ -186,7 +194,7 @@ function createEnemies(amount) {
 // Create Game objects Enemies, Collectibles and Player.
 //////////////////////////////////////////
 const allEnemies = createEnemies(5);
-const powerUps = [];
+const powerUps = new Set();
 
 
 let gems = createGems(1);
@@ -230,6 +238,7 @@ function updateTime() {
 
 
 // Interval creates enemies every second up to the MAX_MONSTERS_AMOUNT
+// and updates the time left for the game.
 const enemiesRegenerate = setInterval(() => {
         if (allEnemies.size < MAX_MONSTERS_AMOUNT) {
             const enemiesUnit = createEnemies(2);
@@ -242,7 +251,7 @@ const enemiesRegenerate = setInterval(() => {
     , 1000
 );
 
-const powerUpsGeneration = setInterval(createPowerUps(1), 5000);
+let powerUpsGeneration;
 
 
 // This listens for key presses and sends the keys to your
@@ -291,6 +300,12 @@ document.querySelector("#start-game").addEventListener("click", function (e) {
     }
 
     gems = createGems(3);
+    powerUpsGeneration = setInterval(() => {
+        console.log(gems.size);
+            if (gems.size < 5) gems.add(createPowerUp());
+        }
+        , 5000);
     player = new Player(playerName, playerChar, playerShots, playerTime);
+
     updateShots();
 });
